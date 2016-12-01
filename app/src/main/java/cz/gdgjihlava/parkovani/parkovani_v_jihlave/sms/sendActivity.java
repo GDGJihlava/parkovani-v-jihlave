@@ -14,6 +14,7 @@ import android.Manifest;
 
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.notifications.OngoingNotification;
 
 
 public class sendActivity extends AppCompatActivity {
@@ -46,9 +47,11 @@ public class sendActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    sendSMS();
+                    //sendSMS();
                     Toast.makeText(getApplicationContext(),
-                            "SMS sent", Toast.LENGTH_LONG).show();
+                            R.string.sms_sent, Toast.LENGTH_LONG).show();
+                    OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
+                    ongoingNotification.showCurrentTicket();
                 }
             }
         });
@@ -58,6 +61,8 @@ public class sendActivity extends AppCompatActivity {
     private void sendSMS() {
         SMS sms = new SMS(sendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
         sms.send();
+        OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
+        ongoingNotification.showCurrentTicket();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
@@ -66,10 +71,10 @@ public class sendActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-                    Toast.makeText(sendActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(sendActivity.this, R.string.sms_sent, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                            R.string.sms_failed, Toast.LENGTH_LONG).show();
                 }
             }
         }

@@ -14,10 +14,9 @@
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:text="Zadat Spz"
+        android:text="@string/enter_spz_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_below="@+id/textView2"
+        android:id="@+id/enter_spz_button"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

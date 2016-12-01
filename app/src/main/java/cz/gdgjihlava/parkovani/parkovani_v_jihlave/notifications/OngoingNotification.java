@@ -35,16 +35,19 @@ public class OngoingNotification {
             .setContentText("Sample Notification Content")
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_notification_car)
-            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_car))
-            ;
+            .addAction(R.drawable.ic_notification_cancel, getStringFromResources(R.string.cancel), pendingIntent)
+            .setDefaults(Notification.DEFAULT_VIBRATE);
         Notification n;
 
         n = builder.build();
 
-        n.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context
             .NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, n);
+    }
+
+    private String getStringFromResources(int id) {
+        return context.getResources().getString(id);
     }
 }
