@@ -12,15 +12,15 @@ public class SMS {
     private String smsNumber;
 
 
-    public SMS(Context context){
+    public SMS(Context context, String zone, String spz){
         this.context = context;
         smsNumber = context.getResources().getString(R.string.sms_service_number);
-    }
-
-    public void create(String zone, String spz) {
         this.zone = zone;
         this.spz = spz;
         smsText = zone + " " +spz;
+    }
+
+    public void create(String zone, String spz) {
     }
 
     public void send(){
