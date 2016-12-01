@@ -17,7 +17,7 @@ import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.notifications.OngoingNotification;
 
 
-public class sendActivity extends AppCompatActivity {
+public class SendActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0 ;
     private EditText zoneInput;
     private EditText idInput;
@@ -36,12 +36,12 @@ public class sendActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(sendActivity.this,
+                if (ContextCompat.checkSelfPermission(SendActivity.this,
                         Manifest.permission.SEND_SMS)
                         != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(sendActivity.this,
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(SendActivity.this,
                             Manifest.permission.SEND_SMS)) {
-                        ActivityCompat.requestPermissions(sendActivity.this,
+                        ActivityCompat.requestPermissions(SendActivity.this,
                                 new String[]{Manifest.permission.SEND_SMS},
                                 MY_PERMISSIONS_REQUEST_SEND_SMS);
                     }
@@ -50,6 +50,8 @@ public class sendActivity extends AppCompatActivity {
                     sendSMS();
                     Toast.makeText(getApplicationContext(),
                             "SMS sent", Toast.LENGTH_LONG).show();
+                    OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
+                    ongoingNotification.showCurrentTicket();
                 }
             }
         });
@@ -57,7 +59,7 @@ public class sendActivity extends AppCompatActivity {
     }
 
     private void sendSMS() {
-        SMS sms = new SMS(sendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
+        SMS sms = new SMS(SendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
         sms.send();
     }
     @Override
@@ -67,7 +69,7 @@ public class sendActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-                    Toast.makeText(sendActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SendActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS failed, please try again.", Toast.LENGTH_LONG).show();
