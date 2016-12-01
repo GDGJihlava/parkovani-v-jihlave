@@ -29,6 +29,7 @@ public class SaveSPZ extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(SaveSPZ.this, "uložena", Toast.LENGTH_SHORT).show();
                 String Spz = editText.getText().toString();
 
                 SharedPreferences.Editor preferences = getSharedPreferences("Prefs", MODE_PRIVATE).edit();
