@@ -1,5 +1,6 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        Button button = (Button)findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SaveSPZ.class);
+                startActivity(intent);
             }
         });
 
