@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">parkovani-v-jihlave</string>
     <string name="action_settings">Settings</string>
+    <string name="sms_service_number">90206</string>
+    <string name="title_activity_send">sendActivity</string>
+    <string name="Hint">Zadejte SPZ</string>
+    <string name="example">Zadejte ve fromátu: \"XXXYYYY\"</string>
 </resources>

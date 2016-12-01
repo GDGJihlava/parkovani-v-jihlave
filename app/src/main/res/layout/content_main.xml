@@ -13,8 +13,11 @@
     tools:context="cz.gdgjihlava.parkovani.parkovani_v_jihlave.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <Button
+        android:text="Zadat Spz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/button2"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
