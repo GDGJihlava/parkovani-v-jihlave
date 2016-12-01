@@ -4,4 +4,5 @@
     <string name="Save">Uložit</string>
     <string name="EnterSpz">Zadejte SPZ</string>
     <string name="Hint">Zadejte SPZ</string>
+    <string name="example">Zadejte ve fromátu: \"XXXYYYY\"</string>
 </resources>
