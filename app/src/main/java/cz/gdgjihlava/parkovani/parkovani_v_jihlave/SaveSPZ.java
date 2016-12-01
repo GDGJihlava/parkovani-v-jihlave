@@ -19,22 +19,30 @@ public class SaveSPZ extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("Prefs", MODE_PRIVATE);
         String Spz = preferences.getString("Spz", "DEFAULT");
 
-        Toast.makeText(this, ""+Spz, Toast.LENGTH_SHORT).show();
+
 
 
 
         final EditText editText = (EditText)findViewById(R.id.editText);
+
+        if(!Spz.equals("DEFAULT")){
+            editText.setText(Spz);
+        }
+
+
         Button button = (Button)findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SaveSPZ.this, "uložena", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SaveSPZ.this, "uloženo", Toast.LENGTH_SHORT).show();
                 String Spz = editText.getText().toString();
 
                 SharedPreferences.Editor preferences = getSharedPreferences("Prefs", MODE_PRIVATE).edit();
                 preferences.putString("Spz", Spz);
                 preferences.commit();
+
+                editText.setText(Spz);
 
 
 
