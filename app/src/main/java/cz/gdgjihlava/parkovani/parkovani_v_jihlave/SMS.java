@@ -1,16 +1,31 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave;
 
 
+import android.content.Context;
+import android.telephony.SmsManager;
 
 public class SMS {
     private String zone;
     private String spz;
     private String smsText;
+    private Context context;
+    private String smsNumber;
+
+
+    public SMS(Context context){
+        this.context = context;
+        smsNumber = context.getResources().getString(R.string.sms_service_number);
+    }
 
     public void create(String zone, String spz) {
         this.zone = zone;
         this.spz = spz;
         smsText = zone + " " +spz;
+    }
+
+    public void send(){
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(smsNumber, null, this.getSMSText(), null, null);
     }
 
     public String getSMSText(){
