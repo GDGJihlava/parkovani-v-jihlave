@@ -1,6 +1,7 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -59,6 +60,14 @@ public class SendActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SharedPreferences preferences = getSharedPreferences("Prefs", MODE_PRIVATE);
+        final String Spz = preferences.getString("Spz", "DEFAULT");
+
+
+        if (!Spz.equals("DEFAULT")) {
+            idInput.setText(Spz);
+        }
 
     }
 
