@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">parkovani-v-jihlave</string>
-    <string name="action_settings">Settings</string>
-    <string name="Save">Uložit</string>
-    <string name="EnterSpz">Zadejte SPZ</string>
-    <string name="Hint">Zadejte SPZ</string>
+    <string name="app_name">Parkování v Jihlavě</string>
+    <string name="action_settings">Nastavit SPZ</string>
+    <string name="sms_service_number">90206</string>
+    <string name="title_activity_send">Odeslat parkovací SMS</string>
+    <string name="hint">Zadejte SPZ</string>
     <string name="example">Zadejte ve fromátu: \"XXXYYYY\"</string>
+    <string name="save">Uložit</string>
+    <string name="enter_spz">Zadejte SPZ:</string>
+    <string name="enter_spz_button">Zadat SPZ</string>
+    <string name="cancel">Ukončit</string>
+    <string name="saved">Uloženo</string>
+    <string name="bad_spz_length">Zadaná SPZ nemá požadovanou délku</string>
+    <string name="sms_sent">SMS sent</string>
+    <string name="sms_failed">SMS se nepodařilo odeslat, zkuste to prosím znovu. </string>
 </resources>

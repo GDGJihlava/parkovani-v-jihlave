@@ -22,19 +22,15 @@ public class SaveSPZ extends AppCompatActivity {
         final String Spz = preferences.getString("Spz", "DEFAULT");
 
 
+        final EditText editText = (EditText) findViewById(R.id.editText);
 
 
-
-        final EditText editText = (EditText)findViewById(R.id.editText);
-
-
-
-        if(!Spz.equals("DEFAULT")){
+        if (!Spz.equals("DEFAULT")) {
             editText.setText(Spz);
         }
 
 
-        Button button = (Button)findViewById(R.id.button);
+        Button button = (Button) findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,18 +38,14 @@ public class SaveSPZ extends AppCompatActivity {
 
                 String Spz = editText.getText().toString();
 
-                if(Spz.length() == 7){
+                if (Spz.length() == 7) {
                     SharedPreferences.Editor preferences = getSharedPreferences("Prefs", MODE_PRIVATE).edit();
                     preferences.putString("Spz", Spz);
-                    preferences.commit();
-                    Toast.makeText(SaveSPZ.this, "uloženo", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(SaveSPZ.this, "Zadaná SPZ nemá požadovanou délku", Toast.LENGTH_SHORT).show();
+                    preferences.apply();
+                    Toast.makeText(SaveSPZ.this, R.string.saved, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SaveSPZ.this, R.string.bad_spz_length, Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
 
 
             }
