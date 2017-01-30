@@ -23,7 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SaveSPZ"></activity>
+        <activity
+            android:name=".SaveSPZ"
+            android:label="@string/action_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.SendActivity" />
+
+        </activity>
     </application>
 
 
