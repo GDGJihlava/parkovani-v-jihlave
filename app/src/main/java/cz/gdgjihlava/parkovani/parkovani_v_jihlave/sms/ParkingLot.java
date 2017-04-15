@@ -1,11 +1,11 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
-public class Parking {
+public class ParkingLot {
 
     private String name;
     private Zone mZone;
 
-    public Parking(String name, Zone zone) {
+    public ParkingLot(String name, Zone zone) {
         this.name = name;
         mZone = zone;
     }
