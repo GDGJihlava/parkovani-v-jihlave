@@ -13,9 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.Manifest;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SaveSPZ;
@@ -26,6 +29,7 @@ public class SendActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0 ;
     private EditText zoneInput;
     private EditText idInput;
+    private Spinner parkingLotSpinner;
     private Button sendButton;
 
 
@@ -35,7 +39,12 @@ public class SendActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        zoneInput = (EditText)findViewById(R.id.zone_input);
+
+
+        parkingLotSpinner = (Spinner) findViewById(R.id.parking_lot_selector);
+        ParkingLotSelector parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, getApplicationContext());
+
+
         idInput = (EditText)findViewById(R.id.id_input);
         sendButton = (Button)findViewById(R.id.send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {

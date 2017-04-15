@@ -13,4 +13,5 @@
     <string name="bad_spz_length">Zadaná SPZ nemá požadovanou délku</string>
     <string name="sms_sent">SMS sent</string>
     <string name="sms_failed">SMS se nepodařilo odeslat, zkuste to prosím znovu. </string>
+    <string name="send">Poslat</string>
 </resources>

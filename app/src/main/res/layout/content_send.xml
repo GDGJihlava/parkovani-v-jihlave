@@ -10,33 +10,35 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cz.gdgjihlava.parkovani.parkovani_v_jihlave.SendActivity"
+    tools:context="cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.SendActivity"
     tools:showIn="@layout/activity_send">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
-        android:id="@+id/zone_input"
-        android:hint="Zadejte zónu" />
+
+     <Spinner
+         android:id="@+id/parking_lot_selector"
+         android:layout_width="200dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="23dp"
+         android:layout_alignParentTop="true"
+         android:layout_alignStart="@+id/id_input"
+         android:layout_alignEnd="@+id/id_input">
+
+     </Spinner>
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_below="@+id/zone_input"
-        android:layout_alignEnd="@+id/zone_input"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="38dp"
         android:id="@+id/id_input"
-        android:hint="Zadejte SPZ" />
+        android:hint="@string/enter_spz"
+        android:layout_below="@+id/parking_lot_selector"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Poslat"
+        android:text="@string/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

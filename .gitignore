@@ -40,3 +40,4 @@ app/manifest-merger-testing-report.txt
 app/mapping.txt
 app/seeds.txt
 app/unused.txt
+/app/google-services.json
