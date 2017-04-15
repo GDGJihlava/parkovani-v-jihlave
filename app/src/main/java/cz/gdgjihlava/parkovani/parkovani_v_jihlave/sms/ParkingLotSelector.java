@@ -19,39 +19,45 @@ import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 
 public class ParkingLotSelector {
 
+    private static final String ZONE_CODE_KEY = "code";
     private static final String TAG = "ParkingLotSelector";
+    private static final String TICKET_DURATION_KEY = "ticketDurationInMinutes";
+    private static final String TICKET_PRICE_KEY = "ticketPriceInCZK";
+    private static final String PARKING_LOTS_KEY = "parking_lots";
+    private static final String NAME_KEY = "name";
+    private static final String ZONE_KEY = "zone";
+    private static final String ZONES_KEY = "zones";
+
     private Spinner mSpinner;
     private ArrayAdapter<ParkingLot> parkingLots;
 
     public ParkingLotSelector(Spinner spinner, final Activity activity) {
         mSpinner = spinner;
+        final Context applicationContext = activity.getApplicationContext();
 
+        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        databaseReference.child("parking_lots").addValueEventListener(new ValueEventListener() {
+        databaseRef.child(PARKING_LOTS_KEY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                parkingLots = new ArrayAdapter<>(activity.getApplicationContext(), android.R.layout.simple_spinner_item);
+                parkingLots = new ArrayAdapter<>(applicationContext, android.R.layout.simple_spinner_item);
 
-                for (DataSnapshot parkingLotSnapshot: dataSnapshot.getChildren()) {
-                    final String name = parkingLotSnapshot.child("name").getValue(String.class);
-                    String zoneKey = parkingLotSnapshot.child("zone").getValue(String.class);
+                for (DataSnapshot parkingLotSnapshot : dataSnapshot.getChildren()) {
+                    final String name = parkingLotSnapshot.child(NAME_KEY).getValue(String.class);
+                    String zoneID = parkingLotSnapshot.child(ZONE_KEY).getValue(String.class);
 
-                    databaseReference.child("zones/" + zoneKey).addListenerForSingleValueEvent(new ValueEventListener
+                    databaseRef.child(ZONES_KEY + "/" + zoneID).addListenerForSingleValueEvent(new ValueEventListener
                         () {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            int zoneCode = dataSnapshot.child("code").getValue(Integer.class);
-                            Log.d(TAG, Integer.toString(zoneCode));
-                            int ticketDurationInMinutes = dataSnapshot.child("ticketDurationInMinutes")
-                                .getValue(Integer.class);
-                            int ticketPriceinCZK = dataSnapshot.child("ticketPriceInCZK").getValue(Integer.class);
+                            int zoneCode = dataSnapshot.child(ZONE_CODE_KEY).getValue(Integer.class);
+                            int ticketDurationInMinutes = dataSnapshot.child(TICKET_DURATION_KEY).getValue(Integer.class);
+                            int ticketPriceInCZK = dataSnapshot.child(TICKET_PRICE_KEY).getValue(Integer.class);
 
-                            Zone zone = new Zone(zoneCode, ticketDurationInMinutes, ticketPriceinCZK);
+                            Zone zone = new Zone(zoneCode, ticketDurationInMinutes, ticketPriceInCZK);
                             parkingLots.add(new ParkingLot(name, zone));
                         }
 
@@ -60,9 +66,6 @@ public class ParkingLotSelector {
 
                         }
                     });
-
-
-
                 }
 
                 parkingLots.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
