@@ -25,4 +25,8 @@ public class ParkingLotSelector {
         parkingLots.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(parkingLots);
     }
+
+    public ParkingLot getSelectedParking() {
+        return (ParkingLot) mSpinner.getSelectedItem();
+    }
 }

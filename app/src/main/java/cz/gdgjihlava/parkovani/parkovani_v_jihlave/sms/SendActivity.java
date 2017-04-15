@@ -26,11 +26,12 @@ import cz.gdgjihlava.parkovani.parkovani_v_jihlave.notifications.OngoingNotifica
 
 
 public class SendActivity extends AppCompatActivity {
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0 ;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     private EditText zoneInput;
     private EditText idInput;
     private Spinner parkingLotSpinner;
     private Button sendButton;
+    ParkingLotSelector parkingLotSelector;
 
 
     @Override
@@ -42,28 +43,27 @@ public class SendActivity extends AppCompatActivity {
 
 
         parkingLotSpinner = (Spinner) findViewById(R.id.parking_lot_selector);
-        ParkingLotSelector parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, getApplicationContext());
+        parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, getApplicationContext());
 
 
-        idInput = (EditText)findViewById(R.id.id_input);
-        sendButton = (Button)findViewById(R.id.send_button);
+        idInput = (EditText) findViewById(R.id.id_input);
+        sendButton = (Button) findViewById(R.id.send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(SendActivity.this,
-                        Manifest.permission.SEND_SMS)
-                        != PackageManager.PERMISSION_GRANTED) {
+                    Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(SendActivity.this,
-                            Manifest.permission.SEND_SMS)) {
+                        Manifest.permission.SEND_SMS)) {
                         ActivityCompat.requestPermissions(SendActivity.this,
-                                new String[]{Manifest.permission.SEND_SMS},
-                                MY_PERMISSIONS_REQUEST_SEND_SMS);
+                            new String[]{Manifest.permission.SEND_SMS},
+                            MY_PERMISSIONS_REQUEST_SEND_SMS);
                     }
-                }
-                else {
+                } else {
                     sendSMS();
                     Toast.makeText(getApplicationContext(),
-                            "SMS sent", Toast.LENGTH_LONG).show();
+                        "SMS sent", Toast.LENGTH_LONG).show();
                     OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
                     ongoingNotification.showCurrentTicket();
                 }
@@ -105,20 +105,22 @@ public class SendActivity extends AppCompatActivity {
     }
 
     private void sendSMS() {
+
         SMS sms = new SMS(SendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
         sms.send();
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
                     Toast.makeText(SendActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                        "SMS failed, please try again.", Toast.LENGTH_LONG).show();
                 }
             }
         }
