@@ -17,4 +17,8 @@ public class ParkingLot {
     public Zone getZone() {
         return mZone;
     }
+
+    public String toString() {
+        return getName();
+    }
 }
