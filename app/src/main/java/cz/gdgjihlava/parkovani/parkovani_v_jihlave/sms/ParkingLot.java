@@ -1,5 +1,8 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParkingLot {
 
     private String name;
@@ -20,5 +23,12 @@ public class ParkingLot {
 
     public String toString() {
         return getName();
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("zone", mZone);
+        return result;
     }
 }

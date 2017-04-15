@@ -43,7 +43,7 @@ public class SendActivity extends AppCompatActivity {
 
 
         parkingLotSpinner = (Spinner) findViewById(R.id.parking_lot_selector);
-        parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, getApplicationContext());
+        parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, this);
 
 
         idInput = (EditText) findViewById(R.id.id_input);
@@ -105,9 +105,10 @@ public class SendActivity extends AppCompatActivity {
     }
 
     private void sendSMS() {
+        parkingLotSelector.getSelectedParking();
 
-        SMS sms = new SMS(SendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
-        sms.send();
+       // SMS sms = new SMS(SendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
+       // sms.send();
     }
 
     @Override

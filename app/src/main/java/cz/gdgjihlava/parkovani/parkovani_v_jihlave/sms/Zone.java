@@ -24,4 +24,13 @@ public class Zone {
     public int getTicketPriceInCZK() {
         return ticketPriceInCZK;
     }
+
+    @Override
+    public String toString() {
+        return "Zone{" +
+            "code=" + code +
+            ", ticketDurationInMinutes=" + ticketDurationInMinutes +
+            ", ticketPriceInCZK=" + ticketPriceInCZK +
+            '}';
+    }
 }
