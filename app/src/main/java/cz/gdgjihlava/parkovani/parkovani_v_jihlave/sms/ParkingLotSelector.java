@@ -1,20 +1,13 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.*;
-import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 
 
 public class ParkingLotSelector {
