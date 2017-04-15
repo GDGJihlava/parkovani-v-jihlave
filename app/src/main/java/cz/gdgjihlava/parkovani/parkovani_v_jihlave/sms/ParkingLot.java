@@ -3,6 +3,10 @@ package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
+
 public class ParkingLot {
 
     private String name;
@@ -24,11 +28,11 @@ public class ParkingLot {
     public String toString() {
         return getName();
     }
-
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("name", name);
-        result.put("zone", mZone);
-        return result;
+    
+    public String getFormattedTicketInfo(Context context) {
+        return context.getResources().getString(R.string.parking_lot) + " " + name + "\n"
+            + context.getString(R.string.zone_code) + " " + mZone.getCode() + "\n"
+            + context.getString(R.string.ticket_duration) + " " + mZone.getTicketDurationInMinutes() + "\n"
+            + context.getString(R.string.ticket_price) + " " + mZone.getTicketDurationInMinutes() + "\n";
     }
 }

@@ -1,5 +1,7 @@
 package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,8 +19,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.Manifest;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SaveSPZ;
@@ -62,8 +62,6 @@ public class SendActivity extends AppCompatActivity {
                     }
                 } else {
                     sendSMS();
-                    Toast.makeText(getApplicationContext(),
-                        "SMS sent", Toast.LENGTH_LONG).show();
                     OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
                     ongoingNotification.showCurrentTicket();
                 }
@@ -71,11 +69,11 @@ public class SendActivity extends AppCompatActivity {
         });
 
         SharedPreferences preferences = getSharedPreferences("Prefs", MODE_PRIVATE);
-        final String Spz = preferences.getString("Spz", "DEFAULT");
+        final String spz = preferences.getString("Spz", "DEFAULT");
 
 
-        if (!Spz.equals("DEFAULT")) {
-            idInput.setText(Spz);
+        if (!spz.equals("DEFAULT")) {
+            idInput.setText(spz);
         }
 
     }
@@ -105,23 +103,33 @@ public class SendActivity extends AppCompatActivity {
     }
 
     private void sendSMS() {
-        parkingLotSelector.getSelectedParking();
+        ParkingLot selectedParkingLot = parkingLotSelector.getSelectedParking();
+        String zoneCode = Integer.toString(selectedParkingLot.getZone().getCode());
 
-       // SMS sms = new SMS(SendActivity.this, zoneInput.getText().toString(), idInput.getText().toString());
-       // sms.send();
+        final SMS sms = new SMS(SendActivity.this, zoneCode, idInput.getText().toString());
+
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.are_you_sure_to_buy)
+            .setMessage(selectedParkingLot.getFormattedTicketInfo(this))
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    sms.send();
+                    Toast.makeText(SendActivity.this, R.string.sms_sent, Toast.LENGTH_LONG).show();
+                }
+            })
+            .setNegativeButton(android.R.string.no, null).show();
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-                    Toast.makeText(SendActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                        "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.sms_failed, Toast.LENGTH_LONG).show();
                 }
             }
         }
