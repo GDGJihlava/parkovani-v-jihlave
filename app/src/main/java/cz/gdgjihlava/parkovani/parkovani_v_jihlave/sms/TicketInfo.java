@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 public class TicketInfo {
 
+    public static final String TAG = "TicketInfo";
     private TextView zoneCodeValue;
     private TextView ticketDurationValue;
     private TextView ticketPriceValue;
@@ -16,9 +17,10 @@ public class TicketInfo {
     }
 
     public void setTicketInfo(int zoneCode, int ticketDuration, int ticketPrice) {
-        // TODO - Remove warning
-        zoneCodeValue.setText(Integer.toString(zoneCode));
-        ticketDurationValue.setText(Integer.toString(ticketDuration));
-        ticketPriceValue.setText(Integer.toString(ticketPrice));
+
+        // TODO - Sometimes not show zero (show 3 instead of 30)
+        zoneCodeValue.setText(String.valueOf(zoneCode));
+        ticketDurationValue.setText(String.valueOf(ticketDuration));
+        ticketPriceValue.setText(String.valueOf(ticketPrice));
     }
 }
