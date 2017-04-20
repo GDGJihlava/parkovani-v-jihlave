@@ -3,7 +3,10 @@ package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -23,8 +26,9 @@ public class ParkingLotSelector {
 
     private Spinner mSpinner;
     private ArrayAdapter<ParkingLot> parkingLots;
+    private TicketInfo mTicketInfo;
 
-    public ParkingLotSelector(Spinner spinner, final Activity activity) {
+    public ParkingLotSelector(final Activity activity, Spinner spinner, final TicketInfo ticketInfo) {
         mSpinner = spinner;
         final Context applicationContext = activity.getApplicationContext();
 
@@ -71,6 +75,26 @@ public class ParkingLotSelector {
             }
         });
 
+        mSpinner.setOnItemSelectedListener(getListener(ticketInfo));
+
+    }
+
+    @NonNull
+    private AdapterView.OnItemSelectedListener getListener(final TicketInfo ticketInfo) {
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ParkingLot parkingLot = (ParkingLot) mSpinner.getSelectedItem();
+                Zone zone = parkingLot.getZone();
+                mSpinner.getSelectedItem();
+                ticketInfo.setTicketInfo(zone.getCode(), zone.getTicketDurationInMinutes(), zone.getTicketPriceInCZK());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
     }
 
     public ParkingLot getSelectedParking() {

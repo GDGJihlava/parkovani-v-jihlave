@@ -46,6 +46,7 @@ public class SendActivity extends AppCompatActivity {
     @BindView(R.id.ticket_price_value) TextView ticketPriceValue;
 
     private ParkingLotSelector parkingLotSelector;
+    private TicketInfo ticketInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class SendActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        parkingLotSelector = new ParkingLotSelector(parkingLotSpinner, this);
+        ticketInfo = new TicketInfo(zoneCodeValue, ticketDurationValue, ticketPriceValue);
+        parkingLotSelector = new ParkingLotSelector(this, parkingLotSpinner, ticketInfo);
 
         SharedPreferences preferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
         final String spz = preferences.getString(SPZ_KEY, DEFAULT_VALUE);
