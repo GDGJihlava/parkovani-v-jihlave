@@ -19,4 +19,5 @@
     <string name="ticket_duration">Délka lístku (min):</string>
     <string name="ticket_price">Cena lístku (CZK):</string>
     <string name="are_you_sure_to_buy">Opravdu chcete koupit tento lístek?</string>
+    <string name="nothing">--</string>
 </resources>
