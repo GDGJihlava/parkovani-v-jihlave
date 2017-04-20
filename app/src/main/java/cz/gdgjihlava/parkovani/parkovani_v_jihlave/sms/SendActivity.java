@@ -62,8 +62,6 @@ public class SendActivity extends AppCompatActivity {
                     }
                 } else {
                     sendSMS();
-                    OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
-                    ongoingNotification.showCurrentTicket();
                 }
             }
         });
@@ -116,6 +114,8 @@ public class SendActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     sms.send();
                     Toast.makeText(SendActivity.this, R.string.sms_sent, Toast.LENGTH_LONG).show();
+                    OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
+                    ongoingNotification.showCurrentTicket(parkingLotSelector.getSelectedParking());
                 }
             })
             .setNegativeButton(android.R.string.no, null).show();
