@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.firebase.database.*;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.ParkingInJihlava;
 
 
 public class ParkingLotSelector {
@@ -30,7 +31,6 @@ public class ParkingLotSelector {
 
     public ParkingLotSelector(final Activity activity, Spinner spinner, final TicketInfo ticketInfo) {
         mSpinner = spinner;
-        final Context applicationContext = activity.getApplicationContext();
 
         final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
@@ -39,7 +39,7 @@ public class ParkingLotSelector {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                parkingLots = new ArrayAdapter<>(applicationContext, android.R.layout.simple_spinner_item);
+                parkingLots = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_spinner_item);
 
                 for (DataSnapshot parkingLotSnapshot : dataSnapshot.getChildren()) {
                     final String name = parkingLotSnapshot.child(NAME_KEY).getValue(String.class);

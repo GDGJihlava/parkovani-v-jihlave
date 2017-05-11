@@ -3,10 +3,9 @@
     <string name="action_settings">Nastavit SPZ</string>
     <string name="sms_service_number">90206</string>
     <string name="title_activity_send">Odeslat parkovací SMS</string>
-    <string name="hint">Zadejte SPZ</string>
     <string name="example">Zadejte ve fromátu: \"XXXYYYY\"</string>
     <string name="save">Uložit</string>
-    <string name="enter_spz">Zadejte SPZ:</string>
+    <string name="enter_spz">Zadejte SPZ</string>
     <string name="enter_spz_button">Zadat SPZ</string>
     <string name="cancel">Ukončit</string>
     <string name="saved">Uloženo</string>
