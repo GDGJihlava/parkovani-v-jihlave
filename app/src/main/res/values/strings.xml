@@ -3,14 +3,20 @@
     <string name="action_settings">Nastavit SPZ</string>
     <string name="sms_service_number">90206</string>
     <string name="title_activity_send">Odeslat parkovací SMS</string>
-    <string name="hint">Zadejte SPZ</string>
     <string name="example">Zadejte ve fromátu: \"XXXYYYY\"</string>
     <string name="save">Uložit</string>
-    <string name="enter_spz">Zadejte SPZ:</string>
+    <string name="enter_spz">Zadejte SPZ</string>
     <string name="enter_spz_button">Zadat SPZ</string>
     <string name="cancel">Ukončit</string>
     <string name="saved">Uloženo</string>
     <string name="bad_spz_length">Zadaná SPZ nemá požadovanou délku</string>
-    <string name="sms_sent">SMS sent</string>
+    <string name="sms_sent">SMS byla odeslána</string>
     <string name="sms_failed">SMS se nepodařilo odeslat, zkuste to prosím znovu. </string>
+    <string name="send">Poslat</string>
+    <string name="parking_lot">Parkoviště:</string>
+    <string name="zone_code">Kód zóny:</string>
+    <string name="ticket_duration">Délka lístku (min):</string>
+    <string name="ticket_price">Cena lístku (CZK):</string>
+    <string name="are_you_sure_to_buy">Opravdu chcete koupit tento lístek?</string>
+    <string name="nothing">--</string>
 </resources>
