@@ -8,13 +8,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.MainActivity;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
-import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.ParkingLot;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.ParkingLot;
 
 /**
  * Created by horm on 1.12.16.

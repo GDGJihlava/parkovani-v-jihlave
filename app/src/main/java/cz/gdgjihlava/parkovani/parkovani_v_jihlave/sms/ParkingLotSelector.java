@@ -2,7 +2,6 @@ package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.firebase.database.*;
-import cz.gdgjihlava.parkovani.parkovani_v_jihlave.ParkingInJihlava;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.ParkingLot;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.Zone;
 
 
 public class ParkingLotSelector {

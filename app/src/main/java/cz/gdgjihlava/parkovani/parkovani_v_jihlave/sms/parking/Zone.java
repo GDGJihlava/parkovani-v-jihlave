@@ -1,4 +1,4 @@
-package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
+package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking;
 
 public class Zone {
 

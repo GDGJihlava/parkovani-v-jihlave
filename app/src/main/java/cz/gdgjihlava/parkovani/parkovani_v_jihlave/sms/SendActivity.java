@@ -27,6 +27,7 @@ import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SaveSPZ;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.notifications.OngoingNotification;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.ParkingLot;
 
 
 public class SendActivity extends AppCompatActivity {

@@ -1,7 +1,4 @@
-package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms;
-
-import java.util.HashMap;
-import java.util.Map;
+package cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking;
 
 import android.content.Context;
 
