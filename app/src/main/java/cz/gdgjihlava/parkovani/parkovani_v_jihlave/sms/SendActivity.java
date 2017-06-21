@@ -14,20 +14,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.*;
 import android.Manifest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.R;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SMS;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.SaveSPZ;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.notifications.OngoingNotification;
 import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.ParkingLot;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.Ticket;
+import cz.gdgjihlava.parkovani.parkovani_v_jihlave.sms.parking.Zone;
 
 
 public class SendActivity extends AppCompatActivity {
@@ -46,8 +50,20 @@ public class SendActivity extends AppCompatActivity {
     @BindView(R.id.ticket_duration_value) TextView ticketDurationValue;
     @BindView(R.id.ticket_price_value) TextView ticketPriceValue;
 
-    private ParkingLotSelector parkingLotSelector;
-    private TicketInfo ticketInfo;
+    private static final String PARKING_LOTS_KEY = "parking_lots";
+    private static final String NAME_KEY = "name";
+    private static final String ZONE_KEY = "zone";
+    private static final String ZONES_KEY = "zones";
+    private static final String ZONE_CODE_KEY = "code";
+    private static final String TICKET_DURATION_KEY = "ticketDurationInMinutes";
+    private static final String TICKET_PRICE_KEY = "ticketPriceInCZK";
+
+    private TicketView mTicketView;
+
+    private ArrayAdapter<ParkingLot> parkingLots;
+    private FirebaseDatabase mDatabase;
+
+    private Zone currentZone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +72,84 @@ public class SendActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        ticketInfo = new TicketInfo(this);
-        parkingLotSelector = new ParkingLotSelector(this, parkingLotSpinner, ticketInfo);
+        mTicketView = new TicketView(this);
 
         loadSPZ();
 
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase.getReference(PARKING_LOTS_KEY).addValueEventListener(getParkingLotFirebaseEventListener());
+
+        parkingLotSpinner.setOnItemSelectedListener(getParkingLotSelectedListener());
+    }
+
+    @NonNull
+    private ValueEventListener getParkingLotFirebaseEventListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                addParkingLotsToSpinner(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    private void addParkingLotsToSpinner(DataSnapshot dataSnapshot) {
+        parkingLots = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item);
+        for (DataSnapshot chilDsnapshot : dataSnapshot.getChildren()) {
+            addParkingLotToAdapter(chilDsnapshot);
+        }
+        parkingLots.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        parkingLotSpinner.setAdapter(parkingLots);
+    }
+
+    private void addParkingLotToAdapter(DataSnapshot parkingLotSnapshot) {
+        String name = parkingLotSnapshot.child(NAME_KEY).getValue(String.class);
+        String zoneID = parkingLotSnapshot.child(ZONE_KEY).getValue(String.class);
+        parkingLots.add(new ParkingLot(name, zoneID));
+    }
+
+    @NonNull
+    private AdapterView.OnItemSelectedListener getParkingLotSelectedListener() {
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ParkingLot selectedParkingLot = getSelectedParking();
+                mDatabase.getReference(ZONES_KEY + "/" + selectedParkingLot.getZoneId())
+                    .addListenerForSingleValueEvent(getZoneFirebaseEventListener());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+    }
+
+    private ParkingLot getSelectedParking() {
+        return (ParkingLot) parkingLotSpinner.getSelectedItem();
+    }
+
+    @NonNull
+    private ValueEventListener getZoneFirebaseEventListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int zoneCode = dataSnapshot.child(ZONE_CODE_KEY).getValue(Integer.class);
+                int ticketDurationInMinutes = dataSnapshot.child(TICKET_DURATION_KEY).getValue(Integer.class);
+                int ticketPriceInCZK = dataSnapshot.child(TICKET_PRICE_KEY).getValue(Integer.class);
+                currentZone = new Zone(zoneCode, ticketDurationInMinutes, ticketPriceInCZK);
+                mTicketView.setTicketInfo(currentZone);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
     }
 
     private void loadSPZ() {
@@ -114,25 +203,31 @@ public class SendActivity extends AppCompatActivity {
     }
 
     private void sendSMS() {
-        ParkingLot selectedParkingLot = parkingLotSelector.getSelectedParking();
-        String zoneCode = Integer.toString(selectedParkingLot.getZone().getCode());
 
-        final SMS sms = new SMS(SendActivity.this, zoneCode, idInput.getText().toString());
+        final SMS sms = new SMS(this, currentZone.getCode(), idInput.getText().toString());
 
         new AlertDialog.Builder(this)
             .setTitle(R.string.are_you_sure_to_buy)
-            .setMessage(selectedParkingLot.getFormattedTicketInfo(this))
+            .setMessage(getFormattedTicketInfo(getSelectedParking(), currentZone))
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int whichButton) {
                     sms.send();
                     showToast(R.string.sms_sent);
                     OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
-                    ongoingNotification.showCurrentTicket(parkingLotSelector.getSelectedParking());
+                    ongoingNotification.showCurrentTicket(new Ticket(getSelectedParking().getName(), currentZone
+                        .getCode(), currentZone.getTicketPriceInCZK(), currentZone.getTicketDurationInMinutes()));
                 }
             })
             .setNegativeButton(android.R.string.no, null).show();
 
+    }
+
+    public String getFormattedTicketInfo(ParkingLot parkingLot, Zone zone) {
+        return getResources().getString(R.string.parking_lot) + " " + parkingLot.getName() + "\n"
+            + getString(R.string.zone_code) + " " + zone.getCode() + "\n"
+            + getString(R.string.ticket_duration) + " " + zone.getTicketDurationInMinutes() + "\n"
+            + getString(R.string.ticket_price) + " " + zone.getTicketDurationInMinutes() + "\n";
     }
 
     @Override
