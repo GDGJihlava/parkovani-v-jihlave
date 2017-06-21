@@ -97,19 +97,25 @@ public class SendActivity extends AppCompatActivity {
         };
     }
 
-    private void addParkingLotsToSpinner(DataSnapshot dataSnapshot) {
+    private void addParkingLotsToSpinner(DataSnapshot parkingLotsSnapshot) {
         parkingLots = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item);
-        for (DataSnapshot chilDsnapshot : dataSnapshot.getChildren()) {
-            addParkingLotToAdapter(chilDsnapshot);
+        for (DataSnapshot parkingLotSnapshot : parkingLotsSnapshot.getChildren()) {
+            addParkingLotToAdapter(parkingLotSnapshot);
         }
         parkingLots.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parkingLotSpinner.setAdapter(parkingLots);
     }
 
     private void addParkingLotToAdapter(DataSnapshot parkingLotSnapshot) {
+        ParkingLot parkingLot = getParkingLotFromSnapshot(parkingLotSnapshot);
+        parkingLots.add(parkingLot);
+    }
+
+    @NonNull
+    private ParkingLot getParkingLotFromSnapshot(DataSnapshot parkingLotSnapshot) {
         String name = parkingLotSnapshot.child(NAME_KEY).getValue(String.class);
         String zoneID = parkingLotSnapshot.child(ZONE_KEY).getValue(String.class);
-        parkingLots.add(new ParkingLot(name, zoneID));
+        return new ParkingLot(name, zoneID);
     }
 
     @NonNull
@@ -138,10 +144,7 @@ public class SendActivity extends AppCompatActivity {
         return new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int zoneCode = dataSnapshot.child(ZONE_CODE_KEY).getValue(Integer.class);
-                int ticketDurationInMinutes = dataSnapshot.child(TICKET_DURATION_KEY).getValue(Integer.class);
-                int ticketPriceInCZK = dataSnapshot.child(TICKET_PRICE_KEY).getValue(Integer.class);
-                currentZone = new Zone(zoneCode, ticketDurationInMinutes, ticketPriceInCZK);
+                currentZone = getZoneFromSnapshot(dataSnapshot);
                 mTicketView.setTicketInfo(currentZone);
             }
 
@@ -150,6 +153,14 @@ public class SendActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    @NonNull
+    private Zone getZoneFromSnapshot(DataSnapshot dataSnapshot) {
+        int zoneCode = dataSnapshot.child(ZONE_CODE_KEY).getValue(Integer.class);
+        int ticketDurationInMinutes = dataSnapshot.child(TICKET_DURATION_KEY).getValue(Integer.class);
+        int ticketPriceInCZK = dataSnapshot.child(TICKET_PRICE_KEY).getValue(Integer.class);
+        return new Zone(zoneCode, ticketDurationInMinutes, ticketPriceInCZK);
     }
 
     private void loadSPZ() {
@@ -169,7 +180,8 @@ public class SendActivity extends AppCompatActivity {
                     MY_PERMISSIONS_REQUEST_SEND_SMS);
             }
         } else {
-            sendSMS();
+            sendSMS(new Ticket(getSelectedParking().getName(), currentZone.getCode(), currentZone.getTicketPriceInCZK
+                (), currentZone.getTicketDurationInMinutes()));
         }
     }
 
@@ -202,32 +214,37 @@ public class SendActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendSMS() {
+    private void sendSMS(final Ticket ticket) {
 
-        final SMS sms = new SMS(this, currentZone.getCode(), idInput.getText().toString());
+        final SMS sms = new SMS(this, ticket.getZoneCode(), idInput.getText().toString());
 
-        new AlertDialog.Builder(this)
-            .setTitle(R.string.are_you_sure_to_buy)
-            .setMessage(getFormattedTicketInfo(getSelectedParking(), currentZone))
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        DialogInterface.OnClickListener confirmClickListener = new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    sms.send();
-                    showToast(R.string.sms_sent);
-                    OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
-                    ongoingNotification.showCurrentTicket(new Ticket(getSelectedParking().getName(), currentZone
-                        .getCode(), currentZone.getTicketPriceInCZK(), currentZone.getTicketDurationInMinutes()));
-                }
-            })
-            .setNegativeButton(android.R.string.no, null).show();
+            public void onClick(DialogInterface dialog, int whichButton) {
+                sms.send();
+                showToast(R.string.sms_sent);
+                OngoingNotification ongoingNotification = new OngoingNotification(getApplicationContext());
+                ongoingNotification.showCurrentTicket(ticket);
+            }
+        };
 
+        showConfirmDialog(ticket, confirmClickListener);
     }
 
-    public String getFormattedTicketInfo(ParkingLot parkingLot, Zone zone) {
-        return getResources().getString(R.string.parking_lot) + " " + parkingLot.getName() + "\n"
-            + getString(R.string.zone_code) + " " + zone.getCode() + "\n"
-            + getString(R.string.ticket_duration) + " " + zone.getTicketDurationInMinutes() + "\n"
-            + getString(R.string.ticket_price) + " " + zone.getTicketDurationInMinutes() + "\n";
+    private void showConfirmDialog(Ticket ticket, DialogInterface.OnClickListener confirmClickListener) {
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.are_you_sure_to_buy)
+            .setMessage(getFormattedTicketInfo(ticket.getParkingLotName(), ticket.getZoneCode(), ticket.getDuration()
+                , ticket.getPrice()))
+            .setPositiveButton(android.R.string.yes, confirmClickListener)
+            .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    public String getFormattedTicketInfo(String name, int code, int duration, int price) {
+        return getResources().getString(R.string.parking_lot) + " " + name + "\n"
+            + getString(R.string.zone_code) + " " + code + "\n"
+            + getString(R.string.ticket_duration) + " " + duration + "\n"
+            + getString(R.string.ticket_price) + " " + price + "\n";
     }
 
     @Override
@@ -235,7 +252,7 @@ public class SendActivity extends AppCompatActivity {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    sendSMS();
+                    sendSMS(new Ticket(getSelectedParking().getName(), currentZone.getCode(), currentZone.getTicketPriceInCZK(), currentZone.getTicketDurationInMinutes()));
                 } else {
                     showToast(R.string.sms_failed);
                 }
