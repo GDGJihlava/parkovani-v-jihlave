@@ -56,17 +56,19 @@ public class SendActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        ticketInfo = new TicketInfo(zoneCodeValue, ticketDurationValue, ticketPriceValue);
+        ticketInfo = new TicketInfo(this);
         parkingLotSelector = new ParkingLotSelector(this, parkingLotSpinner, ticketInfo);
 
+        loadSPZ();
+
+    }
+
+    private void loadSPZ() {
         SharedPreferences preferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
         final String spz = preferences.getString(SPZ_KEY, DEFAULT_VALUE);
-
-
         if (!spz.equals(DEFAULT_VALUE)) {
             idInput.setText(spz);
         }
-
     }
 
     @OnClick(R.id.send_button) void send() {
