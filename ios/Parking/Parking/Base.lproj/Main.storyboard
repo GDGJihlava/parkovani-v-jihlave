@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Parking" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NFm-aj-eqd">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                            </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lon-EA-Zcp">
+                                <rect key="frame" x="52" y="411" width="297" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPZ:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ey8-Nq-9of">
+                                <rect key="frame" x="10" y="415" width="37" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cena lístku:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLT-BP-cdW">
+                                <rect key="frame" x="26" y="50" width="130" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="30 min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxe-PL-nBi">
+                                <rect key="frame" x="232" y="92" width="80" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kód zóny:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfy-iC-j5R">
+                                <rect key="frame" x="26" y="130" width="110" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPP-sJ-cuU">
+                                <rect key="frame" x="237" y="132" width="80" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doba platnosti:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCL-BA-Dzp">
+                                <rect key="frame" x="26" y="90" width="169" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ax-3G-DQ3">
+                                <rect key="frame" x="116" y="351" width="143" height="30"/>
+                                <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <state key="normal" title="Koupit">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="30 Kč" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfU-bM-5Bh">
+                                <rect key="frame" x="232" y="48" width="80" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="mCL-BA-Dzp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="2iw-qs-Dly"/>
+                            <constraint firstItem="sfy-iC-j5R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="34G-0H-dFf"/>
+                            <constraint firstItem="2ax-3G-DQ3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4Sn-Uk-MnM"/>
+                            <constraint firstItem="ey8-Nq-9of" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="5io-NO-ORG"/>
+                            <constraint firstItem="NFm-aj-eqd" firstAttribute="top" secondItem="lon-EA-Zcp" secondAttribute="bottom" constant="10" id="5vG-pk-SH9"/>
+                            <constraint firstItem="lon-EA-Zcp" firstAttribute="leading" secondItem="ey8-Nq-9of" secondAttribute="trailing" constant="5" id="6a1-bi-0xL"/>
+                            <constraint firstItem="Zxe-PL-nBi" firstAttribute="top" secondItem="TfU-bM-5Bh" secondAttribute="bottom" constant="10" id="6e6-zF-jOi"/>
+                            <constraint firstItem="Zxe-PL-nBi" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="10" id="8Qb-wx-c10"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lon-EA-Zcp" secondAttribute="trailing" constant="10" id="8Vj-Ro-EnU"/>
+                            <constraint firstItem="Zxe-PL-nBi" firstAttribute="top" secondItem="TfU-bM-5Bh" secondAttribute="bottom" constant="10" id="Bah-sa-y79"/>
+                            <constraint firstItem="TfU-bM-5Bh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="Hs6-hI-z8j"/>
+                            <constraint firstItem="NFm-aj-eqd" firstAttribute="top" secondItem="lon-EA-Zcp" secondAttribute="bottom" constant="10" id="IQ5-hh-Djt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2ax-3G-DQ3" secondAttribute="trailing" constant="100" id="Lof-gf-G9l"/>
+                            <constraint firstItem="lon-EA-Zcp" firstAttribute="leading" secondItem="ey8-Nq-9of" secondAttribute="trailing" constant="5" id="Ny2-Sp-R2s"/>
+                            <constraint firstItem="2ax-3G-DQ3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="100" id="OuR-w2-Rxf"/>
+                            <constraint firstItem="NFm-aj-eqd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QVS-Kc-Inr"/>
+                            <constraint firstItem="lon-EA-Zcp" firstAttribute="top" secondItem="2ax-3G-DQ3" secondAttribute="bottom" constant="30" id="UKn-7u-Nja"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NFm-aj-eqd" secondAttribute="bottom" id="Vbw-JY-0hf"/>
+                            <constraint firstItem="LLT-BP-cdW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="VzB-Fz-gcO"/>
+                            <constraint firstAttribute="trailing" secondItem="NFm-aj-eqd" secondAttribute="trailing" id="Wxn-he-O7z"/>
+                            <constraint firstItem="mCL-BA-Dzp" firstAttribute="top" secondItem="LLT-BP-cdW" secondAttribute="bottom" constant="10" id="fQZ-RU-vfd"/>
+                            <constraint firstItem="YPP-sJ-cuU" firstAttribute="top" secondItem="Zxe-PL-nBi" secondAttribute="bottom" constant="10" id="i1q-MQ-1R8"/>
+                            <constraint firstAttribute="trailing" secondItem="Zxe-PL-nBi" secondAttribute="trailing" constant="10" id="kWd-7Z-Ps8"/>
+                            <constraint firstItem="LLT-BP-cdW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="nhm-xq-MDW"/>
+                            <constraint firstItem="LLT-BP-cdW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="obo-js-ReR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TfU-bM-5Bh" secondAttribute="trailing" constant="10" id="oq3-j8-hPK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YPP-sJ-cuU" secondAttribute="trailing" constant="55" id="s38-O3-rRY"/>
+                            <constraint firstItem="NFm-aj-eqd" firstAttribute="top" secondItem="ey8-Nq-9of" secondAttribute="bottom" constant="15" id="tTm-q7-ET3"/>
+                            <constraint firstItem="sfy-iC-j5R" firstAttribute="top" secondItem="mCL-BA-Dzp" secondAttribute="bottom" constant="10" id="wFs-z6-BrU"/>
+                            <constraint firstItem="Zxe-PL-nBi" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="10" id="xkP-vt-z2Z"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="136.26760563380282"/>
+        </scene>
+    </scenes>
+</document>
